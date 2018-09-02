@@ -31,6 +31,11 @@ class Visitors
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Receipt", mappedBy="visitor", cascade={"persist", "remove"})
+     */
+    private $receipt;
+
 
     public function getId(): ?int
     {
@@ -69,6 +74,24 @@ class Visitors
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getReceipt(): ?Receipt
+    {
+        return $this->receipt;
+    }
+
+    public function setReceipt(?Receipt $receipt): self
+    {
+        $this->receipt = $receipt;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newVisitor = $receipt === null ? null : $this;
+        if ($newVisitor !== $receipt->getVisitor()) {
+            $receipt->setVisitor($newVisitor);
+        }
 
         return $this;
     }

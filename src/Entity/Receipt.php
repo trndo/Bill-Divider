@@ -41,6 +41,11 @@ class Receipt
      */
     private $equal;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Visitors", inversedBy="receipt", cascade={"persist", "remove"})
+     */
+    private $visitor;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,18 @@ class Receipt
     public function setEqual(float $equal): self
     {
         $this->equal = $equal;
+
+        return $this;
+    }
+
+    public function getVisitor(): ?Visitors
+    {
+        return $this->visitor;
+    }
+
+    public function setVisitor(?Visitors $visitor): self
+    {
+        $this->visitor = $visitor;
 
         return $this;
     }
