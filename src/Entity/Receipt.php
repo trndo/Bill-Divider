@@ -46,6 +46,22 @@ class Receipt
      */
     private $visitor;
 
+    /**
+     * Receipt constructor.
+     * @param $subtotal
+     * @param $tax
+     * @param $tip
+     */
+    public function __construct($subtotal, $tax, $tip)
+    {
+        $this->subtotal = $subtotal;
+        $this->tax = $tax;
+        $this->tip = $tip;
+
+        $this->total = $subtotal+ $tax/100*$subtotal + $tip/100*$subtotal;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

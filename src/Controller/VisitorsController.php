@@ -31,13 +31,14 @@ class VisitorsController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $data = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($visitors);
             $em->flush();
 
-            return $this->redirectToRoute('addReceipt');
+            return $this->redirectToRoute('addReceipt',[
+                'visitor'=>$visitors->getId()
+            ]);
         }
          return $this->render('content/visitors.html.twig',['form'=>$form->createView()]);
     }
