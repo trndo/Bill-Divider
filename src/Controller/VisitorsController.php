@@ -36,9 +36,7 @@ class VisitorsController extends AbstractController
             $em->persist($visitors);
             $em->flush();
 
-            return $this->redirectToRoute('addReceipt',[
-                'visitor'=>$visitors->getId()
-            ]);
+            return $this->redirectToRoute('addReceipt');
         }
          return $this->render('content/visitors.html.twig',['form'=>$form->createView()]);
     }

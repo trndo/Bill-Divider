@@ -10,10 +10,10 @@ namespace App\Controller;
 
 use App\Entity\Visitors;
 use App\Forms\VisitorsType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Receipt;
 use App\Forms\ReceiptType;
-use App\Model\ReceiptDataModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,7 +27,6 @@ class ReceiptController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(ReceiptType::class);
-        $visitor = $request->query->get('visitor');
 
         $form->handleRequest($request);
 
@@ -36,22 +35,27 @@ class ReceiptController extends AbstractController
 
             $receipt = new Receipt($data['subtotal'], $data['tax'], $data['tip']);
             $visitor = $em->getRepository(Visitors::class)
-                ->findOneBy(['id'=>$visitor]);
+                ->findLast();
 
-            $receipt->setVisitor($visitor);
+            $receipt->setVisitor($visitor[0]);
 
             $total = $receipt->getTotal();
-            $receipt->setEqual($total/$visitor->getNumberOf());
+            $receipt->setEqual($total/$visitor[0]->getNumberOf());
 
             $em->persist($receipt);
             $em->flush();
 
+            $response = new JsonResponse();
 
+            $response->setData(['equal'=>$receipt->getEqual(),
+                'total'=>$receipt->getTotal()]);
+
+            return $response;
 
 
         }
-        return $this->render('content/visitors.html.twig',[
-            'form' => $form->createView()
+        return $this->render('content/inform.html.twig',[
+            'form' => $form->createView(),
         ]);
     }
 

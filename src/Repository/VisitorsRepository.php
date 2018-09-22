@@ -19,6 +19,14 @@ class VisitorsRepository extends ServiceEntityRepository
         parent::__construct($registry, Visitors::class);
     }
 
+    public function  findLast(){
+        $qb = $this->createQueryBuilder('v')
+            ->orderBy('v.id','DESC')
+            ->setMaxResults(1)
+            ->getQuery();
+
+        return $qb->execute();
+    }
 //    /**
 //     * @return Visitors[] Returns an array of Visitors objects
 //     */

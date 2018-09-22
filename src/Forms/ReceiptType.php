@@ -8,6 +8,8 @@
 
 namespace App\Forms;
 
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\FormView;
 use App\Entity\Receipt;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -33,6 +35,7 @@ class ReceiptType extends AbstractType
                         'max'=>10
                     ]
                 )]
+
         ])
             ->add('tip',IntegerType::class,[
                 'constraints'=>[
@@ -41,9 +44,11 @@ class ReceiptType extends AbstractType
                             'max'=>50
                         ]
                     )]
+
             ])
             ->add('save',SubmitType::class)
             ->getForm();
     }
+
 
 }
