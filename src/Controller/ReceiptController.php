@@ -40,19 +40,22 @@ class ReceiptController extends AbstractController
             $receipt->setVisitor($visitor[0]);
 
             $total = $receipt->getTotal();
-            $receipt->setEqual($total/$visitor[0]->getNumberOf());
+            $people = $visitor[0]->getNumberOf();
+
+            $receipt->setEqual($total/$people);
 
             $em->persist($receipt);
             $em->flush();
 
-            $response = new JsonResponse();
+            /*$response = new JsonResponse();
 
             $response->setData(['equal'=>$receipt->getEqual(),
-                'total'=>$receipt->getTotal()]);
+                'totalp'=>$receipt->getTotal(),
+                'people'=>$people]);
 
-            return $response;
+            return $response;*/
 
-
+            return $this->redirectToRoute('showResult',['id' => $receipt->getId()]);
         }
         return $this->render('content/inform.html.twig',[
             'form' => $form->createView(),

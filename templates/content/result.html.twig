@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="container" style="max-width: 70%">
+        {% set numberOf = receipts.0.getVisitor.getNumberOf %}
+
+        {% for list in 0..numberOf-1 %}
+            <div>
+                <p>Equal price:</p>
+
+                {{ receipts.0.getEqual }}
+
+                <p>Total price:</p>
+
+                {{ receipts.0.getTotal }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
