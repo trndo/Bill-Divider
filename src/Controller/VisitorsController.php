@@ -20,7 +20,7 @@ class VisitorsController extends AbstractController
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/",name="inform")
+     * @Route("/",name="Visitors")
      *
      */
     public function addInform(Request $request)

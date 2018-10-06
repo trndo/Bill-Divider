@@ -3,7 +3,7 @@
 
     <div class="container" style="max-width: 70%">
         {% set numberOf = receipts.0.getVisitor.getNumberOf %}
-
+        <h1>Place:{{ receipts.0.getVisitor.getPlace }}</h1>
         {% for list in 0..numberOf-1 %}
             <div>
                 <p>Equal price:</p>
@@ -13,7 +13,10 @@
                 <p>Total price:</p>
 
                 {{ receipts.0.getTotal }}
+
             </div>
+            <hr>
         {% endfor %}
+        <a href={{"/"}}>Back</a>
     </div>
 {% endblock %}
